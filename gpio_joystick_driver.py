@@ -49,16 +49,16 @@ def input_setup(item_list):
     return
 
 
-# Read the value configured in the interface and emmit the corresponding event
+# Read the value configured in the interface and emit the corresponding event
 def input_read(key, item_list):
     if (not item_list[2]) and (not GPIO.input(item_list[0])):
         item_list[2] = True
         device.emit(item_list[3], 1)
-        print "{} PRESS".format(key)
+        print "KEY {} PRESS".format(key)
     if item_list[2] and GPIO.input(item_list[0]):
         item_list[2] = False
         device.emit(item_list[3], 0)
-        print "{} RELEASE".format(key)
+        print "KEY {} RELEASE".format(key)
     return
 
 
@@ -66,13 +66,16 @@ def input_read(key, item_list):
 GPIO.setmode(GPIO.BOARD)
 
 # Set all the used GPIO as inputs with pull up resistor
-map(input_setup, interface.values())
+#map(input_setup, interface.values())
 
 # Define input events to associate with the device
 events = map(get_events, interface.values())
 device = uinput.Device(events)
 
-# Start main infinite thread for read the inputs and emmit the events
+# Set all the used GPIO as inputs with pull up resistor
+map(input_setup, interface.values())
+
+# Start main infinite thread for read the inputs and emit the events
 while True:
     for k, v in interface.iteritems():
         input_read(k, v)
