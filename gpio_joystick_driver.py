@@ -66,17 +66,19 @@ def input_read(key, item_list):
 GPIO.setmode(GPIO.BOARD)
 
 # Set all the used GPIO as inputs with pull up resistor
-#map(input_setup, interface.values())
+map(input_setup, interface.values())
 
 # Define input events to associate with the device
 events = map(get_events, interface.values())
 device = uinput.Device(events)
 
-# Set all the used GPIO as inputs with pull up resistor
-map(input_setup, interface.values())
-
 # Start main infinite thread for read the inputs and emit the events
-while True:
-    for k, v in interface.iteritems():
-        input_read(k, v)
-    time.sleep(0.2)
+try:
+    while True:
+        for k, v in interface.iteritems():
+            input_read(k, v)
+        time.sleep(0.2)
+except KeyboardInterrupt:
+    print "Bye"
+finally:
+    GPIO.cleanup()
