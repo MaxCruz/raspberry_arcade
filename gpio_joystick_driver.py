@@ -51,14 +51,17 @@ def input_setup(item_list):
 
 # Read the value configured in the interface and emit the corresponding event
 def input_read(key, item_list):
-    if (not item_list[2]) and (not GPIO.input(item_list[0])):
-        item_list[2] = True
-        device.emit(item_list[3], 1)
+    if GPIO.input(item_list[0]):
+        device.emit_click(item_list[3])
         print "KEY {} PRESS".format(key)
-    if item_list[2] and GPIO.input(item_list[0]):
-        item_list[2] = False
-        device.emit(item_list[3], 0)
-        print "KEY {} RELEASE".format(key)
+    # if (not item_list[2]) and (not GPIO.input(item_list[0])):
+    #    item_list[2] = True
+    #    device.emit(item_list[3], 1)
+    #    print "KEY {} PRESS".format(key
+    # if item_list[2] and GPIO.input(item_list[0]):
+    #    item_list[2] = False
+    #    device.emit(item_list[3], 0)
+    #    print "KEY {} PRESS".format(key)
     return
 
 
@@ -79,6 +82,6 @@ try:
             input_read(k, v)
         time.sleep(0.2)
 except KeyboardInterrupt:
-    print "Bye"
+    print "BYE"
 finally:
     GPIO.cleanup()
