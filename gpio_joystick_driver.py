@@ -27,17 +27,18 @@ interface = {
     "P1_Y": [13, False, e.KEY_O],
     "P1_SELECT": [12, False, e.KEY_H],
     "P1_START": [15, False, e.KEY_G],
-    "P2_UP": [32, False, e.KEY_8],
-    "P2_DOWN": [36, False, e.KEY_2],
-    "P2_LEFT": [37, False, e.KEY_4],
-    "P2_RIGHT": [40, False, e.KEY_6],
-    "P2_A": [5, False, e.KEY_5],
-    "P2_B": [21, False, e.KEY_1],
-    "P2_C": [8, False, e.KEY_3],
-    "P2_D": [18, False, e.KEY_7],
-    "P2_X": [22, False, e.KEY_9],
-    "P2_Y": [24, False, e.KEY_0],
-    "P2_SELECT": [26, False, e.KEY_N]
+    "P2_UP": [18, False, e.KEY_7], 
+    "P2_DOWN": [5, False, e.KEY_5],
+    "P2_LEFT": [21, False, e.KEY_1],
+    "P2_RIGHT": [19, False, e.KEY_M],
+    "P2_A": [8, False, e.KEY_3],
+    "P2_B": [22, False, e.KEY_9],
+    "P2_C": [24, False, e.KEY_0],
+    "P2_D": [32, False, e.KEY_8],
+    "P2_X": [40, False, e.KEY_6],
+    "P2_Y": [26, False, e.KEY_N],
+    "P2_SELECT": [37, False, e.KEY_4],
+    "P2_START": [36, False, e.KEY_2]
 }
 
 
@@ -48,7 +49,7 @@ def get_events(item_list): return item_list[2]
 # Set the GPIO pin as input with a pull up resistor
 def input_setup(item_list):
     GPIO.setup(item_list[0], GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    #print "SETUP GPIO {}".format(item_list[0])
+    print "SETUP GPIO {}".format(item_list[0])
     return
 
 
@@ -59,13 +60,13 @@ def input_read(key, item_list):
         with UInput() as ui:
             ui.write(e.EV_KEY, item_list[2], 2)
             ui.syn()
-        #print "KEY {} PRESS".format(key)
+        print "KEY {} PRESS".format(key)
     if item_list[1] and GPIO.input(item_list[0]):
         item_list[1] = False
         with UInput() as ui:
             ui.write(e.EV_KEY, item_list[2], 1)
             ui.syn()
-        #print "KEY {} RELEASE".format(key)
+        print "KEY {} RELEASE".format(key)
     return
 
 
