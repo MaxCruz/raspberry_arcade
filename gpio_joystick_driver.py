@@ -1,12 +1,12 @@
 #!/usr/bin/python
 
 # Import the needed libraries
-import uinput
+import RPi.GPIO as GPIO
 import time
 import thread
-import RPi.GPIO as GPIO
 from evdev import UInput, ecodes as e
 
+ui = UInput()
 GPIO.setwarnings(False)
 
 # This dictionary contains the map for the operative system events, the inputs in
@@ -57,15 +57,21 @@ def input_setup(item_list):
 def input_read(key, item_list):
     if (not item_list[1]) and (not GPIO.input(item_list[0])):
         item_list[1] = True
-        with UInput() as ui:
-            ui.write(e.EV_KEY, item_list[2], 2)
-            ui.syn()
+        ui.write(e.EV_KEY, item_list[2], 2)
+        ui.write(e.EV_KEY, item_list[2], 0)
+        ui.syn()
+        #with UInput() as ui:
+        #    ui.write(e.EV_KEY, item_list[2], 2)
+        #    ui.syn()
         print "KEY {} PRESS".format(key)
     if item_list[1] and GPIO.input(item_list[0]):
         item_list[1] = False
-        with UInput() as ui:
-            ui.write(e.EV_KEY, item_list[2], 1)
-            ui.syn()
+        ui.write(e.EV_KEY, item_list[2], 1)
+        ui.write(e.EV_KEY, item_list[2], 0)
+        ui.syn()
+        #with UInput() as ui:
+        #    ui.write(e.EV_KEY, item_list[2], 1)
+        #    ui.syn()
         print "KEY {} RELEASE".format(key)
     return
 
@@ -81,6 +87,7 @@ try:
     while True:
         for k, v in interface.iteritems():
             thread.start_new_thread(input_read, (k, v))
+        time.sleep(0.025)
 except KeyboardInterrupt:
     print "BYE"
 finally:
