@@ -20,10 +20,10 @@ interface = {
     "P1_LEFT": [33, False, e.KEY_A],
     "P1_RIGHT": [31, False, e.KEY_D],
     "P1_A": [23, False, e.KEY_K],
-    "P1_B": [10, False, e.KEY_L],
-    "P1_C": [7, False, e.KEY_Y],
-    "P1_D": [11, False, e.KEY_U],
-    "P1_X": [3, False, e.KEY_I],
+    "P1_B": [7, False, e.KEY_L],
+    "P1_C": [3, False, e.KEY_Y],
+    "P1_D": [10, False, e.KEY_U],
+    "P1_X": [11, False, e.KEY_I],
     "P1_Y": [13, False, e.KEY_O],
     "P1_SELECT": [12, False, e.KEY_H],
     "P1_START": [15, False, e.KEY_G],
@@ -32,10 +32,10 @@ interface = {
     "P2_LEFT": [21, False, e.KEY_1],
     "P2_RIGHT": [19, False, e.KEY_M],
     "P2_A": [8, False, e.KEY_3],
-    "P2_B": [22, False, e.KEY_9],
-    "P2_C": [24, False, e.KEY_0],
-    "P2_D": [32, False, e.KEY_8],
-    "P2_X": [40, False, e.KEY_6],
+    "P2_B": [24, False, e.KEY_9],
+    "P2_C": [40, False, e.KEY_0],
+    "P2_D": [22, False, e.KEY_8],
+    "P2_X": [32, False, e.KEY_6],
     "P2_Y": [26, False, e.KEY_N],
     "P2_SELECT": [37, False, e.KEY_4],
     "P2_START": [36, False, e.KEY_2]
@@ -60,18 +60,12 @@ def input_read(key, item_list):
         ui.write(e.EV_KEY, item_list[2], 2)
         ui.write(e.EV_KEY, item_list[2], 0)
         ui.syn()
-        #with UInput() as ui:
-        #    ui.write(e.EV_KEY, item_list[2], 2)
-        #    ui.syn()
         print "KEY {} PRESS".format(key)
     if item_list[1] and GPIO.input(item_list[0]):
         item_list[1] = False
         ui.write(e.EV_KEY, item_list[2], 1)
         ui.write(e.EV_KEY, item_list[2], 0)
         ui.syn()
-        #with UInput() as ui:
-        #    ui.write(e.EV_KEY, item_list[2], 1)
-        #    ui.syn()
         print "KEY {} RELEASE".format(key)
     return
 
